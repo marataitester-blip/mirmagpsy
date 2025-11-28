@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Зеркало Души | MirMag</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              'fade-in': 'fadeIn 1.5s ease-out forwards',
+              'fade-in-up': 'fadeInUp 1s ease-out forwards',
+              'fade-in-left': 'fadeInLeft 1s ease-out forwards',
+              'fade-in-right': 'fadeInRight 1s ease-out forwards',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeInLeft: {
+                '0%': { opacity: '0', transform: 'translateX(-20px)' },
+                '100%': { opacity: '1', transform: 'translateX(0)' },
+              },
+              fadeInRight: {
+                '0%': { opacity: '0', transform: 'translateX(20px)' },
+                '100%': { opacity: '1', transform: 'translateX(0)' },
+              },
+            }
+          }
+        }
+      }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
     <style>
       body {
@@ -30,5 +62,6 @@
 </head>
 <body>
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>
