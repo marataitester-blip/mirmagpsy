@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { AnalyzeResponse } from './types';
-import { analyzeRequest } from './services/geminiService';
 import { getCardUrl } from './utils/tarotUtils';
 import { Loader } from './components/Loader';
 import { CardDisplay } from './components/CardDisplay';
-import { Sparkles, Send } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export default function App() {
   const [input, setInput] = useState('');
@@ -20,9 +19,24 @@ export default function App() {
     setResult(null);
 
     try {
-      const data = await analyzeRequest(input);
+      // Прямой запрос к вашему Vercel API (без Google SDK на клиенте)
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userRequest: input }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Ошибка сервера: ${response.status}`);
+      }
+
+      const data: AnalyzeResponse = await response.json();
       setResult(data);
     } catch (err: any) {
+      console.error(err);
       setError(err.message || "Произошла ошибка при обращении к духам.");
     } finally {
       setLoading(false);
